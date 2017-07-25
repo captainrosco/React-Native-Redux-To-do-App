@@ -1,20 +1,23 @@
-export const addItem = (text) => {
+export const ADD_TASK = 'ADD_TASK'
+export const TEXT_CHANGE = 'TEXT_CHANGE'
+export const DELETE_TASK = 'DELETE_TASK'
+
+export const addTask = () => {
   return {
-    type: 'add_Item'
+    type: ADD_TASK
   }
 }
 
 export const onTextChange = (text) => {
   return {
-    type: 'text_Change',
+    type: TEXT_CHANGE,
     payload: text
   }
 }
 
-
-export const delItem = (text) => {
+export const deleteTask = (task) => {
   return {
-    type: 'delete_Item',
-    payload: text
+    type: DELETE_TASK,
+    payload: task
   }
 }
