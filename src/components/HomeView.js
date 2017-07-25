@@ -1,49 +1,46 @@
+import React, { Component } from 'react'
+import { View, ListView, TextInput, Button } from 'react-native'
+import { connect } from 'react-redux'
+import TaskItem from './TaskItem'
+import { addTask, onTextChange } from '../actions'
 
-
-import React from 'react';
-import { View, ListView, Text, TextInput, Button } from 'react-native';
-import { connect } from 'react-redux';
-import ListItem from './ListItem';
-import { addItem, onTextChange } from '../actions';
-
-
-class HomeView extends React.Component {
-
-  onTextChange(text) {
-    this.props.onTextChange(text);
+class HomeView extends Component {
+  onTextChange (text) {
+    this.props.onTextChange(text)
   }
 
-  render() {
+  render () {
     return (
-      <View style={{flex:1, flexDirection: 'column'}}>
+      <View style={{ flex: 1, flexDirection: 'column' }}>
         <View>
           <TextInput
-            style={{height: 40}}
-            placeholder="Add a To-do Item"
+            style={{ height: 40, padding: 8 }}
+            placeholder='Add a Task'
             onChangeText={this.onTextChange.bind(this)}
             value={this.props.text}
           />
-          <Button title="Add" onPress={this.props.addItem} />
+
+          <Button title='Add' onPress={this.props.addTask} />
         </View>
 
-        <ListView style={{flex: 1}}
-          dataSource={this.props.items}
-          renderRow={(rowData) => <ListItem rowData={rowData}/>}
+        <ListView style={{ flex: 1 }}
+          dataSource={this.props.tasks}
+          renderRow={(rowData) => <TaskItem rowData={rowData} />}
         />
-
       </View>
-    );
+    )
   }
 }
 
-
-const ListData = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+const ListData = new ListView.DataSource({
+  rowHasChanged: (r1, r2) => r1 !== r2
+})
 
 const mapStateToProps = state => {
   return {
     text: state.todo.text,
-    items: ListData.cloneWithRows(state.todo.items)
-  };
-};
+    tasks: ListData.cloneWithRows(state.todo.tasks)
+  }
+}
 
-export default connect(mapStateToProps, {addItem, onTextChange})(HomeView);
+export default connect(mapStateToProps, { addTask, onTextChange })(HomeView)
